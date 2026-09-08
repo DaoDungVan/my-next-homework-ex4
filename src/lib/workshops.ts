@@ -18,6 +18,7 @@ export async function getWorkshops() {
 export async function getWorkshop(id: number) {
   "use cache";
   cacheTag(`workshop-${id}`);
+  // dòng log nếu lỗi không bắt cache sẽ báo
   console.log("QUERY WORKSHOP", id, new Date().toISOString());
   return prisma.workshop.findUnique({
     where: { id },
