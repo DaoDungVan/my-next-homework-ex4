@@ -1,8 +1,14 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getWorkshop } from "@/lib/workshops";
+import prisma from "@/lib/prisma";
 import RegisterForm from "./register-form";
 import CancelButton from "./cancel-button";
+
+export async function generateStaticParams() {
+  const workshops = await prisma.workshop.findMany({ select: { id: true } });
+  return workshops.map((workshop) => ({ id: String(workshop.id) }));
+}
 
 export default async function WorkshopDetailPage({
   params,

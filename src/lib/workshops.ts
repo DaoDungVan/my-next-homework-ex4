@@ -5,6 +5,7 @@ export async function getWorkshops() {
   "use cache";
   cacheTag("workshops");
   cacheLife({ stale: 30, revalidate: 60, expire: 300 });
+  console.log("QUERY WORKSHOPS", new Date().toISOString());
   return prisma.workshop.findMany({
     include: {
       _count: {
@@ -17,6 +18,7 @@ export async function getWorkshops() {
 export async function getWorkshop(id: number) {
   "use cache";
   cacheTag(`workshop-${id}`);
+  console.log("QUERY WORKSHOP", id, new Date().toISOString());
   return prisma.workshop.findUnique({
     where: { id },
     include: { registrations: true },
